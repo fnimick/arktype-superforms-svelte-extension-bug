@@ -1,5 +1,10 @@
 import { type } from "arktype";
 
-const exampleType = type({
+const shouldNotError = type({
   email: "string.email",
+});
+
+const shouldError = type({
+  // @ts-expect-error
+  email: "email",
 });
