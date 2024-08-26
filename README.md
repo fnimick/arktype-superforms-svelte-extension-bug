@@ -1,16 +1,13 @@
 # Minimum reproducible example for arktype + superforms + svelte vscode extension bug
 
-The bugs occurs under the following conditions:
+## SECOND BRANCH: svelte check failure
 
-- there is an import from `sveltekit-superforms/adapters` anywhere in the project. Here, it is in
-  `src/lib/import.ts` and not used anywhere, or imported anywhere.
-- There is a kit route file (e.g. `+page.ts`, `+server.ts` etc) containing an arktype type with a
-  submodule reference. Here, it is in `routes/test/+server.ts`.
-- Any other files using the same arktype type are OK, such as `routes/test/ok.ts` in this example.
-- The svelte extension is installed in vscode and the typescript plugin is enabled.
+From the primary branch, we add a `src/lib/arktype-test.ts` file that now triggers another issue
+with the svelte extension and svelte-check.
 
-Under these conditions, the svelte extension will not be able to resolve the e.g. `"string.email"`
-arktype submodule reference, and will show an error in the editor, in kit route files only.
+Now, with this file present, not only does the extension not report an error in `arktype-test.ts`
+where `svelte-check` does, but also now `svelte-check` fails on all the other files inside `routes/`
+that were previously working.
 
-Of note, `svelte-check` does not report the error - this occurs using the typescript plugin in the
-extension only.
+Adding an `import {} from 'arktype'` anywhere in `src/lib` is sufficient to trigger `svelte-check`
+to also resolve the incorrect import and fail on all the previously working test cases in `routes/`.
