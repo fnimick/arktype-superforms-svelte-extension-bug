@@ -14,3 +14,9 @@ arktype submodule reference, and will show an error in the editor, in kit route 
 
 Of note, `svelte-check` does not report the error - this occurs using the typescript plugin in the
 extension only.
+
+## svelte-check failure
+
+please see branch `svelte-check-fail` for a second test case in which we can trigger `svelte-check`
+to also resolve the incorrect import, now with the extension reporting no errors and `svelte-check`
+reporting errors that should not be present.
